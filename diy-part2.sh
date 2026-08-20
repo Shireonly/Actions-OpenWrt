@@ -24,5 +24,5 @@
 # sed -i 's/192.168.1.1/192.168.100.1/g' package/base-files/files/bin/config_generate
 
 # 允许 netdev_budget_usecs 修改为小数值（解锁下限）
-sed -i 's/20000/100/g' target/linux/generic/pending-6.6/files/net/core/sysctl_net_core.c 2>/dev/null || true
-sed -i 's/20000/100/g' include/kernel-defaults.mk 2>/dev/null || true
+find target/linux/ -name "sysctl_net_core.c" -exec sed -i 's/20000/100/g' {} + 2>/dev/null || true
+find net/core/ -name "sysctl.c" -exec sed -i 's/20000/100/g' {} + 2>/dev/null || true
