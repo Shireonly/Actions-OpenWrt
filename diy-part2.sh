@@ -19,4 +19,10 @@
 # Modify hostname
 #sed -i 's/OpenWrt/P3TERX-Router/g' package/base-files/files/bin/config_generate
 # 自动强行将内核源码及其补丁文件中的 20000 限制全量修改为 100
-grep -rl "20000" target/linux/ | xargs sed -i 's/20000/100/g' 2>/dev/null || true
+#!/bin/bash
+# 修改默认 IP（可选）
+# sed -i 's/192.168.1.1/192.168.100.1/g' package/base-files/files/bin/config_generate
+
+# 允许 netdev_budget_usecs 修改为小数值（解锁下限）
+sed -i 's/20000/100/g' target/linux/generic/pending-6.6/files/net/core/sysctl_net_core.c 2>/dev/null || true
+sed -i 's/20000/100/g' include/kernel-defaults.mk 2>/dev/null || true
