@@ -18,3 +18,5 @@
 
 # Modify hostname
 #sed -i 's/OpenWrt/P3TERX-Router/g' package/base-files/files/bin/config_generate
+# 自动强行将内核源码及其补丁文件中的 20000 限制全量修改为 100
+grep -rl "20000" target/linux/ | xargs sed -i 's/20000/100/g' 2>/dev/null || true
